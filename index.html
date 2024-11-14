@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaLeva - Cozinha</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div v-if="selectedOrder">
+            <button class="goBackButton" v-on:click="clearSelectedOrder">Voltar</button>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detalhes do Pedido: {{selectedOrder.code}}</h4>
+                </div>
+                <div class="card-content">
+                    <br><strong>Cliente:</strong> {{selectedOrder.customer.name}} 
+                    <br><strong>Contato:</strong> {{selectedOrder.customer.phone_number}} - {{selectedOrder.customer.email}}
+                    <br><strong>Status:</strong> {{selectedOrder.status}}
+                    <br><strong>Itens:</strong>
+                    <ul class="order-items">
+                        <li v-for="item in selectedOrder.order_items">
+                            {{ item.description }} - R$ {{ item.price_at_order }}
+                            <br>Obs: {{ item.observation }}
+
+                        </li>
+                    </ul>  <strong>Total: R$ {{selectedOrder.total}}</strong>
+                    <br>
+                    <button v-if="selectedOrder.status === 'Pendente de confirmação da cozinha'" v-on:click="markOrderAsInPreparation(selectedOrder.code)">Aceitar pedido</button>
+                    <button v-if="selectedOrder.status === 'Em preparação'" v-on:click="markOrderAsReady(selectedOrder.code)">Marcar como pronto</button>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <div class="container">
+                <div>
+                    <h1>Pendentes</h1>
+                    <div v-if="pendingResult.length > 0">
+                        <ul>
+                            <li v-for="order in pendingResult">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Pedido: {{order.code}} - {{order.hour}}</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <br><strong>Cliente:</strong> {{order.customer}} - {{order.phone_number}}
+                                        <br><strong>Status:</strong> {{order.status}} 
+                                        <br><strong>Itens:</strong>
+                                        <ul class="order-items">
+                                            <li v-for="item in order.items">
+                                                {{ item }}
+                                            </li>
+                                        </ul>               
+                                        <button v-on:click="showOrderDetails(order.code)">Ver Detalhes</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-else>
+                        <h3>Nenhum pedido pendente</h3>
+                    </div>
+                </div>
+                <div>
+                    <h1>Em preparação</h1>
+                    <div v-if="inPreparationResult.length > 0">
+                        <ul>
+                            <li v-for="order in inPreparationResult">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Pedido: {{order.code}}</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <br><strong>Cliente:</strong>  {{order.customer}} - {{order.phone_number}}
+                                        <br><strong>Status:</strong> {{order.status}} 
+                                        <br><strong>Itens:</strong>
+                                        <ul class="order-items">
+                                            <li v-for="item in order.items">
+                                                {{ item }}
+                                            </li>
+                                        </ul>               
+                                        <button v-on:click="showOrderDetails(order.code)">Ver Detalhes</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-else>
+                        <h3>Nenhum pedido em preparação</h3>
+                    </div>
+                </div>
+                <div>
+                    <h1>Pronto para retirada</h1>
+                    <div v-if="readyResult.length > 0">
+                        <ul>
+                            <li v-for="order in readyResult">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Pedido: {{order.code}}</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <br><strong>Cliente:</strong>  {{order.customer}} - {{order.phone_number}}
+                                        <br><strong>Status:</strong> {{order.status}} 
+                                        <br><strong>Itens:</strong>
+                                        <ul class="order-items">
+                                            <li v-for="item in order.items">
+                                                {{ item }}
+                                            </li>
+                                        </ul>               
+                                        <button v-on:click="showOrderDetails(order.code)">Ver Detalhes</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div v-else>
+                        <h3>Nenhum pedido pronto</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
