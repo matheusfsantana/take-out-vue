@@ -8,7 +8,7 @@ Uma aplicação simples de "cozinha" onde a ideia é oferecer operações simple
 
 Para rodar a aplicação, primeiro é necessário fazer o clone e seguir as instruções deste [repositório](https://github.com/matheusfsantana/take_out), que vai ser a API que nossa aplicação da cozinha vai consumir
 
-Após rodar as instruções e estiver tudo funcionando, clone a aplicação e abra o arquivo index.html no navegador
+Após rodar as instruções da API e estiver tudo funcionando, clone a aplicação do repositorio atual e abra o arquivo index.html no navegador
 
 ```
 $ git clone https://github.com/matheusfsantana/take-out-vue
