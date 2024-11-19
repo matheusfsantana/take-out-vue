@@ -70,6 +70,29 @@ const app = Vue.createApp({
                 this.selectedOrder = data;
             }
         },
+        async markOrderAsCanceled(code) {
+            if (this.cancelReason == null || !this.cancelReason.trim()  ) {
+                alert("Por favor, informe um motivo para o cancelamento.");
+                return;
+            }
+
+            let response = await fetch(`http://localhost:3000/api/v1/restaurants/REST99/orders/${code}/to_canceled`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ canceled_reason: this.cancelReason })
+            });
+
+            if (response.ok) {
+                alert("Pedido cancelado com sucesso.");
+                this.cancelReason = null
+                this.clearSelectedOrder(); 
+            } else {
+                alert("Não foi possível cancelar o pedido. Tente novamente.");
+            }
+          
+        },
         timeAgo(date) {
             const orderDate = new Date(date);
             const now = new Date();

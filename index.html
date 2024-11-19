@@ -29,6 +29,11 @@
                     <br>
                     <button v-if="selectedOrder.status === 'Pendente de confirmação da cozinha'" v-on:click="markOrderAsInPreparation(selectedOrder.code)">Aceitar pedido</button>
                     <button v-if="selectedOrder.status === 'Em preparação'" v-on:click="markOrderAsReady(selectedOrder.code)">Marcar como pronto</button>
+
+                    <div v-if="selectedOrder.status !== 'Cancelado' && selectedOrder.status !== 'Pronto para retirada'">
+                        <textarea rows="4" cols="40" v-model="cancelReason" placeholder="Informe o motivo do cancelamento"></textarea>
+                        <button class='cancelButton' v-on:click="markOrderAsCanceled(selectedOrder.code)">Cancelar pedido</button>
+                    </div>
                 </div>
             </div>
         </div>
